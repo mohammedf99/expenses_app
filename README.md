@@ -7,6 +7,12 @@ A new Flutter project. This expenses tracker app is a project from the Udemy cou
 - How to use `intl` package to format dates.
 - How to use ListView.builder() to build a list of widgets.
 - How to use new widgets such as Card().
+- How to use showModalBottomSheet() to show a bottom sheet.
+- How to use TextField() widget to get user input.
+- How to use TextEditingController() to get the value of the TextField() widget.
+- How to use showDatePicker() to show a date picker.
+- How to use DropDownButton() widget to show a dropdown menu.
+- How to use dispose() to clear the value of TextEditingController() when the widget is removed from the widget tree.
 
 
 
