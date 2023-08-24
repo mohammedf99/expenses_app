@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../models/expense.dart';
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense({super.key, required this.addExpense});
+
+  final void Function(Expense expense) addExpense;
 
   @override
   State<NewExpense> createState() => _NewExpenseState();
@@ -46,10 +48,43 @@ class _NewExpenseState extends State<NewExpense> {
     });
   }
 
+  void _saveExpenseData() {
+    final enteredTitle = _titleController.text;
+    final enteredAmount = double.parse(_amountController.text);
+
+    final amountIsInvalid = enteredAmount < 0;
+
+    if (amountIsInvalid || enteredTitle.trim().isEmpty) {
+      showDialog(context: context, builder: (ctx) {
+        return AlertDialog(
+          title: const Text("Invalid input"),
+          content: const Text("Please enter a valid title and amount!"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text("Close"),
+            )
+          ],
+        );
+      });
+      return;
+    }
+
+    widget.addExpense(
+      Expense(
+        title: enteredTitle,
+        amount: enteredAmount,
+        date: _selectedDate!,
+        category: _selectedCategory,
+      ),
+    );
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.fromLTRB(12, 48, 16, 12),
       child: Column(
         children: [
           TextField(
@@ -108,7 +143,7 @@ class _NewExpenseState extends State<NewExpense> {
                 onChanged: (value) {
                   if (value == null) return;
                   setState(() {
-                    _selectedCategory = value as Category;
+                    _selectedCategory = value;
                   });
                 },
               ),
@@ -118,7 +153,8 @@ class _NewExpenseState extends State<NewExpense> {
                 child: const Text('Cancel'),
               ),
               ElevatedButton(
-                  onPressed: () {}, child: const Text('Add expense')),
+                  onPressed: _saveExpenseData,
+                  child: const Text('Add expense')),
             ],
           )
         ],
