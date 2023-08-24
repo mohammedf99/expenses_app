@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(useMaterial3: true),
       debugShowCheckedModeBanner: false,
       title: 'Expense App',
-      home: Expenses(),
+      home: const Expenses(),
     );
   }
 }
