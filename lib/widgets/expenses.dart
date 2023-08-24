@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/expense.dart';
-import 'expenses_list/expsenses_list.dart';
+import 'expenses_list/expenses_list.dart';
 import './new_expense.dart';
 
 class Expenses extends StatefulWidget {
@@ -44,9 +44,24 @@ class _ExpensesState extends State<Expenses> {
   }
 
   void _removeExpense(Expense expense) {
+
+    final expenseIndex = _registeredExpenses.indexOf(expense);
+
     setState(() {
       _registeredExpenses.remove(expense);
     });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text("Expense deleted"),
+        duration: const Duration(seconds: 10),
+        action: SnackBarAction(label: "Undo", onPressed: () {
+          setState(() {
+            _registeredExpenses.insert(expenseIndex, expense);
+          });
+        }),
+      ),
+    );
   }
 
   @override
@@ -56,7 +71,7 @@ class _ExpensesState extends State<Expenses> {
     );
 
     if (_registeredExpenses.isNotEmpty) {
-      ExpensesList(
+      mainContent = ExpensesList(
         expenses: _registeredExpenses,
         onDismissed: _removeExpense,
       );
