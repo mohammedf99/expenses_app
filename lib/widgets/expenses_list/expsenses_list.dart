@@ -16,7 +16,6 @@ class ExpensesList extends StatelessWidget {
       itemBuilder: (context, index) => Dismissible(
         key: ValueKey(expenses[index]),
         onDismissed: (direction) => onDismissed(expenses[index]),
-        background: const SnackBar(content: Text("Delete")),
         child: ExpenseItem(expense: expenses[index]),
       ),
     );
