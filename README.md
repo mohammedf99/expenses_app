@@ -14,6 +14,8 @@ A new Flutter project. This expenses tracker app is a project from the Udemy cou
 - How to use `DropDownButton()` widget to show a dropdown menu.
 - How to use `dispose()` to clear the value of `TextEditingController()` when the widget is removed from the widget tree.
 - How to use `Dismissible()` widget to dismiss a widget from the widget tree.
+- How to use `ScaffoldMessenger.of(context).showSnackBar()` to show a snackbar and undo removed item.
+- How to use `ThemeData()` to set the theme of the app for both dark and light modes.
 
 
 
