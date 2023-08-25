@@ -37,3 +37,26 @@ const categoryIcons = {
   Category.leisure: Icons.local_movies,
   Category.utilities: Icons.settings,
 };
+
+class ExpenseBucket {
+  ExpenseBucket({
+    required this.category,
+    required this.expenses,
+  });
+
+  ExpenseBucket.forCategory(List<Expense> allExpense, this.category)
+      : expenses = allExpense
+            .where((expense) => expense.category == category)
+            .toList();
+
+  final Category category;
+  final List<Expense> expenses;
+
+  double get totalAmount {
+    double sum = 0;
+    for (final expense in expenses) {
+      sum += expense.amount;
+    }
+    return sum;
+  }
+}
