@@ -55,18 +55,20 @@ class _NewExpenseState extends State<NewExpense> {
     final amountIsInvalid = enteredAmount < 0;
 
     if (amountIsInvalid || enteredTitle.trim().isEmpty) {
-      showDialog(context: context, builder: (ctx) {
-        return AlertDialog(
-          title: const Text("Invalid input"),
-          content: const Text("Please enter a valid title and amount!"),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: const Text("Close"),
-            )
-          ],
-        );
-      });
+      showDialog(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              title: const Text("Invalid input"),
+              content: const Text("Please enter a valid title and amount!"),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx),
+                  child: const Text("Close"),
+                )
+              ],
+            );
+          });
       return;
     }
 
@@ -83,6 +85,9 @@ class _NewExpenseState extends State<NewExpense> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 48, 16, 12),
       child: Column(
@@ -117,6 +122,7 @@ class _NewExpenseState extends State<NewExpense> {
                       _selectedDate == null
                           ? "Select date"
                           : formatter.format(_selectedDate!),
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                     IconButton(
                       icon: const Icon(Icons.calendar_today),
@@ -131,6 +137,9 @@ class _NewExpenseState extends State<NewExpense> {
           Row(
             children: [
               DropdownButton(
+                dropdownColor: isDarkMode
+                    ? Theme.of(context).colorScheme.secondaryContainer
+                    : Theme.of(context).colorScheme.primaryContainer,
                 value: _selectedCategory,
                 items: Category.values
                     .map(
