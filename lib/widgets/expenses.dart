@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../models/expense.dart';
 import 'expenses_list/expenses_list.dart';
@@ -69,6 +70,9 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    final isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
+
     Widget mainContent = const Center(
       child: Text("No expenses found 🤪"),
     );
@@ -87,14 +91,25 @@ class _ExpensesState extends State<Expenses> {
           onPressed: _openAddExpenseOverlay,
         ),
       ]),
-      body: Column(
-        children: <Widget>[
-          Chart(expenses: _registeredExpenses),
-          Expanded(
-            child: mainContent,
-          ),
-        ],
-      ),
+      body: isPortrait
+          ? Column(
+              children: <Widget>[
+                Chart(expenses: _registeredExpenses),
+                Expanded(
+                  child: mainContent,
+                ),
+              ],
+            )
+          : Row(
+              children: <Widget>[
+                Expanded(
+                  child: Chart(expenses: _registeredExpenses),
+                ),
+                Expanded(
+                  child: mainContent,
+                ),
+              ],
+            ),
     );
   }
 }
