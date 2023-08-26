@@ -30,6 +30,7 @@ class _ExpensesState extends State<Expenses> {
 
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
+      useSafeArea: true,
       isScrollControlled: true,
       context: context,
       builder: (_) {
@@ -84,12 +85,16 @@ class _ExpensesState extends State<Expenses> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Expense App'), actions: [
-        IconButton(
-          icon: const Icon(Icons.add),
-          onPressed: _openAddExpenseOverlay,
-        ),
-      ]),
+      appBar: AppBar(
+        title: const Text('Expense App'),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: _openAddExpenseOverlay,
+          ),
+        ],
+      ),
       body: isPortrait
           ? Column(
               children: <Widget>[
